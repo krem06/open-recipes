@@ -1,0 +1,83 @@
+name: "Bootstrapped SaaS on AWS"
+description: "Minimal viable SaaS stack for solo founders — auth, payments, API, frontend"
+version: "1.0"
+author: "your-github-username"
+license: "CC-BY-4.0"
+tags: [saas, aws, bootstrapped, solo-founder, serverless]
+
+ingredients:
+  - id: frontend
+    name: Next.js on Vercel
+    url: https://vercel.com
+    docs: https://vercel.com/docs
+    role: "Frontend framework and hosting"
+    why: "Zero-config deployment, edge network, integrates cleanly with Supabase Auth"
+    alternatives: [Netlify, Cloudflare Pages]
+
+  - id: auth
+    name: Supabase Auth
+    url: https://supabase.com
+    docs: https://supabase.com/docs/guides/auth
+    role: "User authentication and session management"
+    why: "Avoids building auth from scratch, generous free tier, integrates with Postgres RLS"
+    alternatives: [Clerk, Auth0]
+
+  - id: database
+    name: Supabase Postgres
+    url: https://supabase.com
+    docs: https://supabase.com/docs/guides/database
+    role: "Primary relational database"
+    why: "Bundled with Supabase Auth, real Postgres with RLS for row-level security"
+    alternatives: [PlanetScale, Neon]
+
+  - id: api
+    name: AWS Lambda
+    url: https://aws.amazon.com/lambda
+    docs: https://docs.aws.amazon.com/lambda/latest/dg/welcome.html
+    role: "Backend API and business logic"
+    why: "Pay-per-use with no idle cost, ideal for early stage with unpredictable traffic"
+    alternatives: [Railway, Render, Fly.io]
+
+  - id: payments
+    name: Stripe
+    url: https://stripe.com
+    docs: https://docs.stripe.com
+    role: "Payment processing and subscription management"
+    why: "Industry standard, best developer experience, straightforward webhook model"
+    alternatives: [Paddle, Lemon Squeezy]
+
+  - id: email
+    name: Resend
+    url: https://resend.com
+    docs: https://resend.com/docs
+    role: "Transactional email"
+    why: "Simple API, generous free tier, good deliverability"
+    alternatives: [SendGrid, Postmark]
+
+relations:
+  - from: frontend
+    to: auth
+    how: "Supabase JS client handles sessions and JWT tokens client-side"
+  - from: frontend
+    to: api
+    how: "REST calls with JWT from Supabase Auth passed as Authorization header"
+  - from: api
+    to: database
+    how: "Direct Postgres connection via Supabase connection string"
+  - from: api
+    to: payments
+    how: "Stripe SDK for checkout sessions, webhooks update subscription state in database"
+  - from: api
+    to: email
+    how: "Resend SDK triggered on key events (signup, payment confirmation, etc.)"
+
+setup:
+  - "Go to supabase.com, create a new project, copy the ANON_KEY and project URL from Settings > API"
+  - "In Supabase, enable Email auth under Authentication > Providers"
+  - "Go to stripe.com, create an account, enable test mode, copy Secret Key and Publishable Key"
+  - "In Stripe, create a product and a recurring price, copy the Price ID"
+  - "Go to resend.com, create an account, verify your domain, copy the API key"
+  - "Deploy frontend to Vercel: connect your Git repo, add env vars (Supabase URL, ANON_KEY, Stripe Publishable Key)"
+  - "Deploy Lambda functions via AWS SAM, add env vars (Supabase connection string, Stripe Secret Key, Resend API key)"
+  - "In Stripe, register your Lambda URL as a webhook endpoint, select events: checkout.session.completed, customer.subscription.updated, customer.subscription.deleted"
+  - "Test end-to-end with Stripe test mode and a Supabase test user"
