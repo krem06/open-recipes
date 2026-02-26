@@ -1,5 +1,9 @@
 # Open Recipes 🧪
 
+> **Note:** The example recipe below is AI-generated to illustrate the format. Real-world recipes based on actual experience are coming soon. The whole point of Open Recipes is to capture human experience — patterns that help others, AI or not, build effective setups grounded in what actually works.
+>
+> To protect that authenticity, this project plans to use [Vouch](https://github.com/mitchellh/vouch) to ensure only verified humans can contribute recipes. In a world where AI can generate plausible-looking content, trust matters — especially for a project whose value depends entirely on real experience.
+
 **A standard for describing how products are assembled.**
 
 Open Recipes is an open format for documenting the tools, services, and components that make up a product — and the reasoning behind each choice. Not code, not infrastructure. Just a clear, structured description of what goes into something and how it fits together.
@@ -58,7 +62,7 @@ setup:
 
 | Recipe | Tags | Author |
 |---|---|---|
-| [Bootstrapped SaaS on AWS](recipes/bootstrapped-saas-aws/) | saas, aws, solo-founder | — |
+| [Bootstrapped SaaS on AWS](recipes/bootstrapped-saas-aws/) | saas, aws, solo-founder | Claude code ;) |
 
 *More recipes welcome — see [Contributing](CONTRIBUTING.md).*
 
