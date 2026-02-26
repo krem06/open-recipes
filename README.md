@@ -45,6 +45,14 @@ ingredients:
     why: "Avoids building auth from scratch, generous free tier"
     alternatives: [Clerk, Auth0]
 
+  - id: frontend
+    name: Next.js
+    url: https://nextjs.org
+    docs: https://nextjs.org/docs
+    role: "Frontend framework and SSR"
+    why: "Full-stack React framework with great DX, Vercel integration, and built-in routing"
+    alternatives: [Remix, SvelteKit, Nuxt]
+
 relations:
   - from: frontend
     to: auth
